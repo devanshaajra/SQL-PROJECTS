@@ -1,0 +1,127 @@
+--3. Store Inventory Managment System
+
+--DDL Command - Creation of Table
+
+CREATE TABLE Electronics (
+    ProductID INT PRIMARY KEY,
+    ProductName VARCHAR(100) NOT NULL,
+    Brand VARCHAR(50) NOT NULL DEFAULT 'Apple',
+    Category VARCHAR(50) DEFAULT 'Laptop',
+    Price DECIMAL(10,2) NOT NULL,
+    Stock INT NOT NULL,
+    Warranty INT NOT NULL,
+    Rating DECIMAL(2,1) NOT NULL,
+    Supplier VARCHAR(50) NOT NULL,
+    LaunchYear INT NOT NULL
+);
+
+--DML - INSERTion of Commands
+
+INSERT INTO Electronics VALUES
+(101,'iPhone 15','Apple','Smartphone',79999.00,25,12,4.9,'Apple India',2023),
+(102,'Galaxy S24','Samsung','Smartphone',74999.00,18,12,4.8,'Samsung India',2024),
+(103,'MacBook Air M3','Apple','Laptop',114999.00,10,12,4.9,'Apple India',2024),
+(104,'Inspiron 15','Dell','Laptop',65999.00,15,24,4.6,'Dell India',2023),
+(105,'ThinkPad E14','Lenovo','Laptop',68999.00,12,36,4.7,'Lenovo India',2023),
+(106,'Bravia X82L','Sony','Television',89999.00,8,24,4.8,'Sony India',2023),
+(107,'Mi Smart TV X','Xiaomi','Television',42999.00,20,12,4.5,'Xiaomi India',2022),
+(108,'iPad Air','Apple','Tablet',59999.00,14,12,4.8,'Apple India',2024),
+(109,'Galaxy Tab S9','Samsung','Tablet',67999.00,11,12,4.7,'Samsung India',2023),
+(110,'WH-1000XM5','Sony','Headphones',29999.00,30,12,4.9,'Sony India',2022),
+(111,'AirPods Pro','Apple','Headphones',24999.00,28,12,4.8,'Apple India',2023),
+(112,'Boat Rockerz 550','Boat','Headphones',2499.00,60,12,4.4,'Boat India',2022),
+(113,'Canon EOS R50','Canon','Camera',72999.00,9,24,4.8,'Canon India',2023),
+(114,'GoPro Hero 12','GoPro','Camera',44999.00,13,12,4.7,'GoPro India',2023),
+(115,'Nintendo Switch OLED','Nintendo','Gaming Console',34999.00,16,12,4.9,'Nintendo India',2021);
+
+--1.Insert a new product PlayStation 5 with your own values
+INSERT INTO Electronics VALUES
+(116,'Playstation 5','Nintendo','Gaming Console',45000.00,9,4,5.0,'Nintendo India',2020);
+
+--2.Insert a new Smartwatch product with your own details.
+INSERT INTO Electronics VALUES
+(117,'Smartphone','Samsung','Smartwatch',12999.00,2,10,4.7,'Samsumg India',2021);
+
+--3.Insert three new electronic products in a single query.
+INSERT INTO Electronics VALUES
+(118,'Samsung A35','Samsung','Smartphone',19999.00,16,6,4.8,'Samsumg India',2024),
+(119,'Iphone 15 Pro','Apple','Smartphone',78999.00,19,3,4.6,'Apple India',2023),
+(120,'WH-1000XM9','Sony','Camera',89999.00,10,5,4.5,'Sony India',2022);
+
+--4.Display all products to verify the inserted records
+SELECT  * FROM Electronics;
+
+--5. Update the price of iPhone 15 to ₹82,999.
+UPDATE Electronics
+SET Price = 82999
+WHERE ProductName = 'iPhone 15';
+
+--6.Increase the stock of MacBook Air M3 by 5 units
+UPDATE Electronics
+SET Stock = Stock + 3
+WHERE ProductName = 'MacBook Air M3';
+
+--7.Change the warranty of Boat Rockerz 550 from 12 months to 24 months
+UPDATE Electronics
+SET Warranty =24
+WHERE ProductName = 'Boat Rockerz 550';
+
+--8.Update the rating of all Headphones to 4.9
+UPDATE Electronics
+SET Rating =4.9
+WHERE Category = 'Headphones';
+
+--9.ncrease the price of all Laptops by 8%.
+UPDATE Electronics
+SET Price = Price + Price *8/100
+WHERE Category = 'Laptop';
+
+SELECT*FROM Electronics;
+
+--10.Reduce the stock of all Smartphones by 2 units
+UPDATE Electronics
+SET Stock = Stock - 2
+WHERE Category = 'Smartphone';
+
+--11.Change the supplier of all Apple products to Apple Store India.
+UPDATE Electronics
+SET Supplier = 'Apple Store India'
+WHERE Supplier = 'Apple India';
+
+--12.Update the launch year of all Televisions to 2025
+UPDATE Electronics
+SET LaunchYear = 2025
+WHERE Category = 'Television';
+
+--13.Delete the product Boat Rockerz 550
+DELETE FROM Electronics 
+WHERE ProductName = 'Boat Rockerz 550';
+
+--14.Delete all products with Stock less than 10.
+DELETE FROM Electronics
+WHERE Stock < 10;
+
+--15.Delete all products launched before 2023
+DELETE FROM Electronics
+WHERE LaunchYear < 2023;
+
+--16.Delete all products in the Camera category
+DELETE FROM Electronics
+WHERE Category = 'Camera';
+
+--17.Insert a new product and then update its price and stock.
+INSERT INTO Electronics VALUES
+(121,'Boat Airpods 141','Boat','Headphones',5999.00,14,3,4.2,'Boat India',2025);
+
+UPDATE Electronics 
+SET Price=6900,STOCK =19 
+WHERE ProductID =121;
+
+--18.Display all products after performing all CRUD operations
+SELECT * FROM Electronics;
+
+--19.Delete all records from the Electronics table without deleting the table
+TRUNCATE Electronics;
+
+--20.Delete the entire Electronics table from the database
+DROP TABLE Electronics;
