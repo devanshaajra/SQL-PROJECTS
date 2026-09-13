@@ -1,0 +1,129 @@
+--2. Library Managment System
+
+CREATE TABLE Library_Books (
+    BookID INT PRIMARY KEY,
+    Title VARCHAR(100) NOT NULL,
+    Author VARCHAR(100) NOT NULL,
+    Category VARCHAR(50) NOT NULL,
+    Price DECIMAL(6,2) NOT NULL,
+    Stock INT NOT NULL,
+    Publisher VARCHAR(100) DEFAULT 'Crown',
+    PublishedYear INT DEFAULT 2008,
+    Rating DECIMAL(2,1) NOT NULL
+);
+
+INSERT INTO Library_Books VALUES
+(101,'Atomic Habits','James Clear','Self Help',18.99,45,'Penguin',2018,4.9),
+(102,'Rich Dad Poor Dad','Robert Kiyosaki','Finance',15.50,20,'Plata',1997,4.8),
+(103,'Clean Code','Robert Martin','Programming',35.00,12,'Prentice Hall',2008,4.7),
+(104,'The Alchemist','Paulo Coelho','Fiction',12.99,35,'HarperOne',1988,4.6),
+(105,'Deep Work','Cal Newport','Productivity',20.00,15,'Grand Central',2016,4.8),
+(106,'Python Crash Course','Eric Matthes','Programming',30.50,18,'No Starch Press',2023,4.9),
+(107,'Think and Grow Rich','Napoleon Hill','Finance',16.00,10,'Tarcher',1937,4.5),
+(108,'Ikigai','Hector Garcia','Self Help',14.99,25,'Penguin',2017,4.7),
+(109,'The Psychology of Money','Morgan Housel','Finance',22.50,30,'Harriman House',2020,4.9),
+(110,'Head First Java','Kathy Sierra','Programming',42.00,8,'O''Reilly',2022,4.8),
+(111,'Zero to One','Peter Thiel','Business',19.50,17,'Crown',2014,4.4),
+(112,'The Lean Startup','Eric Ries','Business',24.00,11,'Crown',2011,4.6),
+(113,'Can''t Hurt Me','David Goggins','Self Help',21.00,14,'Lioncrest',2018,4.9),
+(114,'The Pragmatic Programmer','Andrew Hunt','Programming',39.99,7,'Addison-Wesley',1999,4.9),
+(115,'Sapiens','Yuval Noah Harari','History',25.99,13,'Harper',2014,4.8);
+
+--Queries 
+
+--1.Display books whose price is greater than 20.
+SELECT * FROM Library_Books where Price >20;
+
+--2.Display books whose stock is less than 15.
+SELECT * FROM Library_Books where Stock < 15;
+
+--3.Display all Programming books.
+SELECT * FROM Library_Books where Category ='Programming';
+
+--4.Display books published after 2015.
+SELECT * FROM Library_Books where PublishedYear > 2015;
+
+--5.Display books with ratings greater than or equal to 4.8.
+SELECT * FROM Library_Books where Rating >= 4.8;
+
+--6.Display books published between 2010 and 2023.
+SELECT * FROM Library_Books where PublishedYear BETWEEN 2010 AND 2023;
+
+--7.Display books whose category is Finance or Business.
+SELECT * FROM Library_Books where Category = 'Finance' OR Category = 'Business';
+
+--8.Display books whose stock is greater than 10 and price is less than 25.
+SELECT * FROM Library_Books where Stock >10 AND Stock <25;
+
+--9.Display books whose title starts with 'T'.
+SELECT * FROM Library_Books where title like 'T%';
+
+--10.Display books whose author name ends with 'n'.
+SELECT * FROM Library_Books where author like '%n';
+
+--11.Display books whose title contains the word "Code".
+SELECT * FROM Library_Books where title like '%Code%';
+
+--12.Display books that are not in the Programming category.
+SELECT * FROM Library_Books where Category not in ('Programming');
+
+--13.Display unique categories available in the store.
+SELECT DISTINCT Category FROM Library_Books ;
+
+--14.Sort books by price from highest to lowest.
+SELECT * FROM Library_Books order by Price DESC;
+
+--15.Sort books by PublishedYear from oldest to newest
+SELECT * FROM Library_Books order by PublishedYear ;
+
+--16.Sort by Rating (Highest), then Price (Lowest).
+SELECT * FROM Library_Books order by Rating DESC,Price ASC;
+
+--17.Display the first 5 books.
+SELECT * FROM Library_Books LIMIT 5;
+
+--18.Display the next 5 books after skipping the first 5.
+SELECT * FROM Library_Books LIMIT 5 OFFSET 5;
+
+--19.Display books ranked 11–15 based on BookID.
+SELECT * FROM Library_Books LIMIT 5 OFFSET 10;
+
+--20.Count the total number of books.
+SELECT COUNT(Bookid) from Library_Books;
+
+--21.Find the total stock available.
+SELECT SUM(Stock) from Library_Books;
+
+--22.Find the average price.
+SELECT AVG(Price) from Library_Books;
+
+--23.Count the number of books in each category.
+SELECT Category,Count(bookid) from Library_Books group by Category ;
+
+--24.Find the average price of each category.
+SELECT Category,AVG(Price) from Library_Books group by Category ;
+
+--25.Find the maximum price in each category.
+SELECT Category,MAX(Price) from Library_Books group by Category ;
+
+--26.Display only those categories having more than 2 books.
+SELECT Category,COUNT(Bookid) from Library_Books group by Category having count(bookid)>2 ;
+
+--27.Display publishers having at least 2 books.
+SELECT Publisher,count(Bookid) from Library_Books group by Publisher having count(Bookid)=2 ;
+
+--28.Find the average rating of each publisher.
+SELECT Publisher,AVG(Rating) from Library_Books group by Publisher ;
+
+--29.Display categories whose average price is greater than 20.
+SELECT Category,AVG(Price) from Library_Books group by Category having AVG(Price)>20 ;
+
+--30.Display each category with the total number of books, 
+--average price, highest price, lowest price, and total stock. 
+--Show only categories having at least 2 books. Sort by average price (highest first)
+
+SELECT Category,COUNT(Bookid),ROUND(AVG(PRICE),2),MAX(PRICE),MIN(PRICE),SUM(STOCK) 
+FROM Library_Books
+group by Category
+having count(Category) >= 2
+order by avg(price) desc;
