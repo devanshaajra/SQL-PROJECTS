@@ -1,0 +1,108 @@
+--1.Student - Marks College Project 
+
+CREATE TABLE Student_Marks_Table
+(StudentID Serial PRIMARY KEY,
+FirstName Varchar(35) NOT NULL,
+LastName Varchar(35) NOT NULL,
+Gender Varchar(10) NOT NULL,
+Age Numeric NOT NULL ,
+Department Varchar(40) DEFAULT 'Computer Science',
+City Varchar(20) DEFAULT 'Ahmedabad',
+Marks Real NOT NULL,
+AdmissionYear INT DEFAULT 2024
+);
+
+INSERT INTO Student_Marks_Table(StudentID,FirstName,LastName,Gender,Age,Department,City,Marks,AdmissionYear) 
+VALUES
+(101,'Rahul','Sharma','Male',20,'Computer Science','Ahmedabad',85,2023),
+(102,'Priya','Patel','Female',21,'Computer Science','Surat',92,2022),
+(103,'Amit','Verma','Male',22,'Mechanical','Vadodara',76,2021),
+(104,'Sneha','Joshi','Female',20,'Electrical','Ahmedabad',88,2023),
+(105,'Rohan','Mehta','Male',23,'Civil','Rajkot',67,2021),
+(106,'Neha','Shah','Female',21,'Computer Science','Ahmedabad',95,2022),
+(107,'Karan','Singh','Male',22,'Mechanical','Surat',74,2021),
+(108,'Anjali','Desai','Female',20,'Electrical','Vadodara',81,2023),
+(109,'Vikram','Patel','Male',24,'Civil','Ahmedabad',59,2020),
+(110,'Pooja','Kapoor','Female',22,'Computer Science','Rajkot',90,2022)
+;
+
+SELECT * FROM Student_Marks_Table;
+
+--Queries
+
+--1.Display only the first name, last name, and department of each student.
+SELECT FirstName,LastName,Department From Student_Marks_Table;
+
+--2.Display all female students
+SELECT * FROM Student_Marks_Table WHERE Gender='Female';
+
+--3.Display students whose marks are greater than 80.
+SELECT * FROM Student_Marks_Table WHERE Marks > 80;
+
+--4.Display students from Ahmedabad
+SELECT * FROM Student_Marks_Table WHERE City='Ahmedabad';
+
+--5.Display students from the Computer Science department.
+SELECT * FROM Student_Marks_Table WHERE Department='Computer Science';
+
+--6.Display students admitted in the year 2023.
+SELECT * FROM Student_Marks_Table WHERE AdmissionYear=2023;
+
+--7.Display students whose age is greater than 21.
+SELECT * FROM Student_Marks_Table WHERE Age > 21;
+
+--8.Display students whose marks are between 70 and 90
+SELECT * FROM Student_Marks_Table WHERE Marks>70 and marks<90;
+
+--9.Display students whose first name starts with the letter P
+SELECT * FROM Student_Marks_Table WHERE FirstName like 'P%';
+
+--10.Display students whose last name ends with a
+SELECT * FROM Student_Marks_Table WHERE LastName like '%a';
+
+--11.Display students who belong to either Ahmedabad or Surat
+SELECT * FROM Student_Marks_Table WHERE City IN('Ahmedabad','Surat');
+
+--12.Sort all students by marks in descending order.
+SELECT * FROM Student_Marks_Table ORDER BY Marks DESC;
+
+--13.Sort all students by age in ascending order
+SELECT * FROM Student_Marks_Table ORDER BY Age,FirstName ASC;
+
+--14.Display the top 5 students with the highest marks
+SELECT * FROM Student_Marks_Table ORDER BY Marks DESC LIMIT 5;
+
+--15.Count the total number of students.
+SELECT COUNT(StudentID) FROM Student_Marks_Table;
+
+--16.Count the number of students in each department
+SELECT Department,COUNT(StudentID) FROM Student_Marks_Table group by department;
+
+--17.Find the highest marks scored by any student
+SELECT MAX(MARKS) FROM Student_Marks_Table ;
+
+--18.Display the names of students who scored the highest marks.
+SELECT FirstName,LastName,Marks FROM Student_Marks_Table order by Marks desc limit 1 ;
+
+--19.Find the average marks of all students.
+SELECT AVG(MARKS) FROM Student_Marks_Table;
+
+--20.Find the total marks scored by all students
+SELECT SUM(MARKS) FROM Student_Marks_Table;
+
+--21.Display students whose marks are greater than the average marks.
+SELECT * FROM Student_Marks_Table WHERE MARKS >(SELECT AVG(MARKS) FROM Student_Marks_Table);
+
+--22.Find the second-highest marks in the class.
+SELECT * FROM Student_Marks_Table ORDER BY Marks DESC LIMIT 1 OFFSET 1;
+
+--23.Display the department-wise average marks.
+SELECT Department,AVG(Marks) FROM Student_Marks_Table GROUP BY Department;
+
+--24.Display departments having more than 2 students
+SELECT Department,Count(StudentID) FROM Student_Marks_Table GROUP BY Department Having Count(StudentID)>2;
+
+--25.Display students whose city name contains the letter a.
+SELECT * FROM Student_Marks_Table WHERE City like '%a%';
+
+
